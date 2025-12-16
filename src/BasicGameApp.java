@@ -90,11 +90,11 @@ public class BasicGameApp implements Runnable {
 		astro = new Astronaut(10,100);
         astro2 = new Astronaut(randx,randy);
         asteroid1 = new Asteroid(200,randy);
-        asteroid2 = new Asteroid(randx,150);
+        asteroid2 = new Asteroid(100, randx);
         astro2.dx=-2;
         astro2.height=100;
         astro2.width=100;
-        asteroid2.dx = 2;
+        asteroid2.dx = 6;
         asteroid2.height = 75;
         asteroid2.width = 75;
 
@@ -130,21 +130,35 @@ public class BasicGameApp implements Runnable {
         asteroid1.move();
         asteroid2.move();
         crashing();
+        crash();
 	}
 
-    public void crashing(){
+    public void crashing() {
         // if astros crash into each other
-        if(astro.hitbox.intersects(astro2.hitbox)){
+        if (astro.hitbox.intersects(astro2.hitbox)) {
             System.out.println("CRASH");
             astro.dx = -astro.dx;
             astro2.dx = -astro2.dx;
-            astro.dy= -astro.dy;
+            astro.dy = -astro.dy;
             astro2.dy = -astro2.dy;
             astro2.isAlive = false;
 
 
         }
+    }
 
+    public void crash() {
+        // if astros crash into each other
+        if (asteroid1.hitbox.intersects(asteroid2.hitbox)) {
+            System.out.println("CRASH");
+            asteroid1.dx = -asteroid1.dx;
+            asteroid2.dx = -asteroid2.dx;
+            asteroid1.dy = -asteroid1.dy;
+            asteroid2.dy = -asteroid2.dy;
+            asteroid2.isAlive = false;
+
+
+        }
     }
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -200,7 +214,11 @@ public class BasicGameApp implements Runnable {
         }
 
         g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
-        g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
+
+        if (asteroid2.isAlive == true) {
+            g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
+        }
+
         g.drawRect(astro.hitbox.x,astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
 
         g.dispose();
