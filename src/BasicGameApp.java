@@ -259,11 +259,11 @@ public class BasicGameApp implements Runnable, KeyListener {
         }
         if (e.getKeyCode() == 37) {
             System.out.println("going left");
-            astro.dx = -Math.abs(astro.dx);
+            astro.isWest = true;
         }
         if (e.getKeyCode() == 39) {
             System.out.println("going right");
-            astro.dx = Math.abs(astro.dx);
+            astro.isEast = true;
         }
     }
     @Override
@@ -275,6 +275,14 @@ public class BasicGameApp implements Runnable, KeyListener {
         }
         if (e.getKeyCode() == 40){
             astro.isSouth = false;
+        }
+
+        if (e.getKeyCode() == 37){
+            astro.isWest = false;
+        }
+
+        if (e.getKeyCode() == 39){
+            astro.isEast = false;
         }
 
 

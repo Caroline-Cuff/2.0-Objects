@@ -18,6 +18,8 @@ public class Astronaut {
     public Rectangle hitbox;
     public boolean isNorth;
     public boolean isSouth;
+    public boolean isEast;
+    public boolean isWest;
 
 
     // METHOD DEFINITION SECTION
@@ -39,6 +41,9 @@ public class Astronaut {
         hitbox = new Rectangle(xpos,ypos, width, height);
         isNorth = false;
         isSouth = false;
+        isWest = false;
+        isEast = false;
+
  
     } // constructor
 
@@ -57,6 +62,20 @@ public class Astronaut {
             dy = Math.abs(dy);
         }
 
+        if (isWest == true){
+            dx = 2;
+            dx = -Math.abs(dx);
+        }
+        if (isEast == true){
+            dx = 2;
+            dx = Math.abs(dx);
+        }
+
+        if (isWest == false && isEast == false){
+            dx = 0;
+        }
+
+        ////////////////
 
         if (xpos<0){//left wall
             dx=-dx;
