@@ -15,6 +15,8 @@
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -27,7 +29,9 @@ import javax.swing.JPanel;
 
 // step 1: implement key listener
 
-public class BasicGameApp implements Runnable, KeyListener {
+/// Step 1: implement mouse litener
+
+public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -46,6 +50,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Image astroPic;
     public Image asteroidPic;
     public Image backgroundpic;
+    public Rectangle startHitbox;
+
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -104,10 +110,12 @@ public class BasicGameApp implements Runnable, KeyListener {
         asteroid2.dx = 6;
         asteroid2.height = 75;
         asteroid2.width = 75;
+        startHitbox = new Rectangle (100,100,100,100);
 
 
 
-	}// BasicGameApp()
+
+    }// BasicGameApp()
 
    
 //*******************************************************************************
@@ -190,6 +198,9 @@ public class BasicGameApp implements Runnable, KeyListener {
       // step 2: add key listener to canvas
       canvas.addKeyListener(this);
 
+      /// Step 2: add mouse motion to canvas
+      canvas.addMouseListener(this);
+
       canvas.setBounds(0, 0, WIDTH, HEIGHT);
       canvas.setIgnoreRepaint(true);
    
@@ -230,6 +241,8 @@ public class BasicGameApp implements Runnable, KeyListener {
         }
 
         g.drawRect(astro.hitbox.x,astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
+        g.setColor(Color.GREEN);
+        g.fillRect(100,100,100,100);
 
         g.dispose();
 
@@ -265,6 +278,22 @@ public class BasicGameApp implements Runnable, KeyListener {
             System.out.println("going right");
             astro.isEast = true;
         }
+        if (e.getKeyCode() == 87) { //w
+            astro2.isNorth = true;
+        }
+        if (e.getKeyCode() == 65) {
+            System.out.println("going down");
+            astro2.isSouth = true;
+        }
+        if (e.getKeyCode() == 65) {
+            System.out.println("going left");
+            astro2.isWest = true;
+        }
+        if (e.getKeyCode() == 83) {
+            System.out.println("going right");
+            astro2.isEast = true;
+        }
+
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -284,10 +313,53 @@ public class BasicGameApp implements Runnable, KeyListener {
         if (e.getKeyCode() == 39){
             astro.isEast = false;
         }
+        if (e.getKeyCode() == 87){
+            System.out.println("now");
+            astro2.isNorth=false;
+        }
+        if (e.getKeyCode() == 83){
+            astro2.isSouth = false;
+        }
 
+        if (e.getKeyCode() == 65){
+            astro2.isWest = false;
+        }
 
+        if (e.getKeyCode() == 68){
+            astro2.isEast = false;
+        }
 
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1, 1);
+        System.out.println("mouse pressed");
+        if (startHitbox.intersects(pointHitbox)){
+            System.out.println("Start");
+        }
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println();
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("mouse entered the screeen");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.println("mouse exited the screen");
+
+    }
 }
