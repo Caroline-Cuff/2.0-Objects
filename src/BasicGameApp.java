@@ -51,6 +51,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     public Image asteroidPic;
     public Image backgroundpic;
     public Rectangle startHitbox;
+    public boolean startScreen;
 
 
    //Declare the objects used in the program
@@ -110,7 +111,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         asteroid2.dx = 6;
         asteroid2.height = 75;
         asteroid2.width = 75;
-        startHitbox = new Rectangle (100,100,100,100);
+        startHitbox = new Rectangle (450,250,100,100);
+        startScreen = true;
 
 
 
@@ -226,23 +228,29 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
-        g.drawImage(backgroundpic,0,0,WIDTH, HEIGHT,null);
+        if (!startScreen) {
+            g.drawImage(backgroundpic,0,0,WIDTH, HEIGHT,null);
 
-      //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-        if (astro2.isAlive == true) {
-            g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+            //draw the image of the astronaut
+            g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+            if (astro2.isAlive == true) {
+                g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+            }
+
+            g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
+
+            if (asteroid2.isAlive == true) {
+                g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
+            }
+            g.drawRect(astro.hitbox.x,astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
+
         }
+        if (startScreen == true) {
+            g.setColor(Color.BLUE);
+            g.fillRect(450, 250, 100, 100);
 
-        g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
 
-        if (asteroid2.isAlive == true) {
-            g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
         }
-
-        g.drawRect(astro.hitbox.x,astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
-        g.setColor(Color.GREEN);
-        g.fillRect(100,100,100,100);
 
         g.dispose();
 
@@ -278,10 +286,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             System.out.println("going right");
             astro.isEast = true;
         }
+
+
         if (e.getKeyCode() == 87) { //w
             astro2.isNorth = true;
         }
-        if (e.getKeyCode() == 65) {
+        if (e.getKeyCode() == 83) {
             System.out.println("going down");
             astro2.isSouth = true;
         }
@@ -289,7 +299,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             System.out.println("going left");
             astro2.isWest = true;
         }
-        if (e.getKeyCode() == 83) {
+        if (e.getKeyCode() == 68) {
             System.out.println("going right");
             astro2.isEast = true;
         }
@@ -342,6 +352,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         System.out.println("mouse pressed");
         if (startHitbox.intersects(pointHitbox)){
             System.out.println("Start");
+            startScreen = false;
         }
 
     }
@@ -360,6 +371,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         System.out.println("mouse exited the screen");
+        startScreen = true;
 
     }
 }
