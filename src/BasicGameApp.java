@@ -157,6 +157,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         }
 	}
 
+
     public void crashing() {
         // if astros crash into each other
         if (astro.hitbox.intersects(astro2.hitbox)) {
