@@ -52,6 +52,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     public Image backgroundpic;
     public Rectangle startHitbox;
     public boolean startScreen;
+    public Asteroid[] ast;
 
 
    //Declare the objects used in the program
@@ -114,7 +115,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         startHitbox = new Rectangle (450,250,100,100);
         startScreen = true;
 
+        ast = new Asteroid[5];
+        for(int h = 0; h<ast.length; h++){
+            ast[h] = new Asteroid((int) (Math.random() * 700), (int) (Math.random()*50));
 
+        }
 
 
     }// BasicGameApp()
@@ -147,6 +152,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         asteroid1.move();
         asteroid2.move();
         crashing();
+        for (int d = 0; d<ast.length; d++){
+            ast[d].move();
+        }
 	}
 
     public void crashing() {
@@ -243,14 +251,16 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
                 g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
             }
             g.drawRect(astro.hitbox.x,astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
+            for (int e = 0; e<ast.length; e++) {
+                g.drawImage(asteroidPic, ast[e].xpos, ast[e].ypos, ast[e].width, ast[e].height, null);
 
+            }
         }
         if (startScreen == true) {
             g.setColor(Color.BLUE);
             g.fillRect(450, 250, 100, 100);
-
-
         }
+
 
         g.dispose();
 
