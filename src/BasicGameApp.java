@@ -153,6 +153,15 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         asteroid2.move();
         crashing();
         for (int d = 0; d<ast.length; d++){
+            if (d>=2){
+                ast[d].dx = (int)(Math.random()*-10);
+                ast[d].dy = (int)(Math.random()*10);
+            }
+            else {
+                ast[d].dx = (int)(Math.random()*6);
+            ast[d].dy = (int)(Math.random()*-12);
+            }
+
             ast[d].move();
         }
 	}
